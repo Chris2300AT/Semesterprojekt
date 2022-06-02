@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/open_24_display_st.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 120
+font_data = ExtResource( 1 )
+
+[node name="player_score" type="Label"]
+margin_right = 198.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1.25, 0.18, 0.98, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "SCORE"

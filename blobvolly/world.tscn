@@ -1,0 +1,230 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://scripts/player_left.gd" type="Script" id=1]
+[ext_resource path="res://scripts/player_right.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprites/small_ball.png" type="Texture" id=3]
+[ext_resource path="res://scripts/ball.gd" type="Script" id=4]
+[ext_resource path="res://scripts/score_control.gd" type="Script" id=5]
+[ext_resource path="res://scenes/menu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://world.gd" type="Script" id=7]
+[ext_resource path="res://scenes/score_scene.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/winning_screen.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/background_Trim_Trim.webm" type="VideoStream" id=10]
+[ext_resource path="res://scripts/ball2.gd" type="Script" id=11]
+[ext_resource path="res://VideoPlayer.gd" type="Script" id=12]
+[ext_resource path="res://assets/blobs/0.75x/Element 56@0.75x.png" type="Texture" id=13]
+[ext_resource path="res://assets/floor/1x/Element 1.png" type="Texture" id=14]
+[ext_resource path="res://leaderboard.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/sprites/hahah.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/hahah.jpg" type="Texture" id=17]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 20, 250 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 10.3417, 34 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 470, 24.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+
+[sub_resource type="RectangleShape2D" id=7]
+
+[sub_resource type="PhysicsMaterial" id=5]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 30.0
+
+[sub_resource type="Environment" id=12]
+background_mode = 4
+glow_enabled = true
+glow_blend_mode = 0
+glow_hdr_luminance_cap = 2.0
+
+[node name="program" type="Node"]
+script = ExtResource( 7 )
+
+[node name="menu" parent="." instance=ExtResource( 6 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.0
+margin_bottom = 0.0
+program_node_path = NodePath("..")
+
+[node name="game" type="Node2D" parent="."]
+
+[node name="VideoPlayer" type="VideoPlayer" parent="game"]
+modulate = Color( 0.470588, 0.470588, 0.470588, 1 )
+margin_left = 1.0
+margin_top = -1.0
+margin_right = 1921.0
+margin_bottom = 1079.0
+stream = ExtResource( 10 )
+autoplay = true
+buffering_msec = 10
+script = ExtResource( 12 )
+
+[node name="net" type="StaticBody2D" parent="game"]
+position = Vector2( 960, 832 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/net"]
+visible = false
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="game/net"]
+modulate = Color( 1.2, 0.18, 0.98, 1 )
+position = Vector2( 0.499984, 3.49998 )
+scale = Vector2( 1.57692, 2.05118 )
+texture = ExtResource( 14 )
+
+[node name="left_floor" type="StaticBody2D" parent="game" groups=["floor", "left_floor"]]
+position = Vector2( 480, 1020 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="game/left_floor"]
+position = Vector2( -12.3753, 37 )
+scale = Vector2( 45, 0.5 )
+shape = SubResource( 11 )
+
+[node name="Sprite" type="Sprite" parent="game/left_floor"]
+modulate = Color( 0.607843, 0.607843, 0.607843, 1 )
+position = Vector2( -9.99997, 30.0001 )
+scale = Vector2( 2.07048, 0.666666 )
+texture = ExtResource( 17 )
+
+[node name="right_floor" type="StaticBody2D" parent="game" groups=["floor", "right_floor"]]
+position = Vector2( 1439, 1020 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/right_floor"]
+position = Vector2( 14, 34.5 )
+shape = SubResource( 13 )
+
+[node name="Sprite2" type="Sprite" parent="game/right_floor"]
+modulate = Color( 0.607843, 0.607843, 0.607843, 1 )
+position = Vector2( 11.5001, 30 )
+scale = Vector2( 2.06828, 0.666666 )
+texture = ExtResource( 16 )
+
+[node name="right_blob" type="KinematicBody2D" parent="game" groups=["players"]]
+position = Vector2( 1400, 960 )
+script = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="game/right_blob"]
+visible = false
+polygon = PoolVector2Array( 43, -20, 52, -6, 55, 14, 52, 38, 29, 67, 9, 74, -17, 73, -35, 63, -49, 42, -57, 15, -51, -6, -43, -20, -39, -47, -27, -63, -11, -72, 12, -73, 28, -63, 39, -48 )
+
+[node name="Sprite" type="Sprite" parent="game/right_blob"]
+modulate = Color( 1.3, 0.18, 0.98, 1 )
+texture = ExtResource( 13 )
+
+[node name="left_blob" type="KinematicBody2D" parent="game" groups=["players"]]
+modulate = Color( 1.3, 0.18, 0.98, 1 )
+position = Vector2( 600, 950 )
+script = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="game/left_blob"]
+visible = false
+polygon = PoolVector2Array( 43, -20, 52, -6, 55, 14, 52, 38, 29, 67, 9, 74, -17, 73, -35, 63, -49, 42, -57, 15, -51, -6, -43, -20, -39, -47, -27, -63, -11, -72, 12, -73, 28, -63, 39, -48 )
+
+[node name="Sprite" type="Sprite" parent="game/left_blob"]
+texture = ExtResource( 13 )
+
+[node name="left_wall" type="StaticBody2D" parent="game"]
+position = Vector2( 0, 20 )
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/left_wall"]
+scale = Vector2( 100, 1 )
+shape = SubResource( 4 )
+
+[node name="right_wall" type="StaticBody2D" parent="game"]
+position = Vector2( 1920, 20 )
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/right_wall"]
+scale = Vector2( 100, 1 )
+shape = SubResource( 4 )
+
+[node name="cealing" type="StaticBody2D" parent="game"]
+position = Vector2( 1000, -1000 )
+z_index = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/cealing"]
+position = Vector2( 0, 9 )
+scale = Vector2( 100, 1 )
+shape = SubResource( 7 )
+
+[node name="ball2" type="RigidBody2D" parent="game" groups=["Ball"]]
+position = Vector2( 600, 0 )
+physics_material_override = SubResource( 5 )
+gravity_scale = 8.0
+contacts_reported = 3
+contact_monitor = true
+linear_damp = 0.2
+angular_damp = 2.0
+script = ExtResource( 11 )
+score_control_node_path = NodePath("../../score_control")
+
+[node name="Sprite" type="Sprite" parent="game/ball2"]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/ball2"]
+shape = SubResource( 6 )
+
+[node name="ball" type="KinematicBody2D" parent="game"]
+position = Vector2( -600, 0 )
+collision/safe_margin = 1.0
+motion/sync_to_physics = true
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="game/ball"]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/ball"]
+shape = SubResource( 9 )
+
+[node name="score_control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -30.0
+script = ExtResource( 5 )
+game_node_path = NodePath("../game")
+winning_screen_node_path = NodePath("../winning_screen")
+
+[node name="left_player_score" parent="score_control" instance=ExtResource( 8 )]
+anchor_left = 0.03
+anchor_top = 0.03
+anchor_right = 1.0
+anchor_bottom = 0.03
+margin_left = -57.6
+margin_top = 8.5
+margin_right = -1655.0
+margin_bottom = 148.5
+text = "0"
+align = 1
+
+[node name="right_player_score" parent="score_control" instance=ExtResource( 8 )]
+anchor_left = 0.97
+anchor_top = 0.03
+anchor_right = 0.97
+anchor_bottom = 0.03
+margin_left = -225.4
+margin_top = 8.5
+margin_right = 39.6
+margin_bottom = 168.5
+text = "0"
+align = 1
+
+[node name="winning_screen" parent="." instance=ExtResource( 9 )]
+visible = false
+score_control_node_path = NodePath("../score_control")
+program_node_path = NodePath("..")
+
+[node name="leaderboard" parent="." instance=ExtResource( 15 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 12 )
